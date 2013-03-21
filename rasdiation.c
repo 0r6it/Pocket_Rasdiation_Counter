@@ -303,7 +303,7 @@ void *counter_info_str(void *arg){
         // 集計データの整形と出力
         sprintf(
             str,
-            "UnixTime,%ld,CPM,%lf,uSv/h,%lf,uSv/h_Tolerance,%lf\n",
+            "UnixTime,%ld,CPM,%lf,uSv/h,%lf,uSv/h_Error,%lf\n",
             time(NULL), cpm, usvh, usvht
         );
 
