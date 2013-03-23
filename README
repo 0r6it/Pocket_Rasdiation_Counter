@@ -70,15 +70,11 @@
 【他のプログラムとの連携する場合】
   ファイルや名前付きパイプを使用することにより他のプログラムとの連携する事が可能です。
 
-  今回は、名前付きパイプを使用した方法を解説します。
-
-  名前付きパイプを作成します。
-  $ mkfifo /tmp/rasdiation_fifo
   名前付きパイプへ出力するようにオプションを指定し実行します。 
-  $ rasdiation --sign_pin 30 --nois_pin 31 -o /tmp/rasdiation_fifo
+  $ rasdiation --sign_pin 30 --nois_pin 31 -o /var/lib/rasdiation/rasdiation.fifo
 
   外部プログラムで名前付きパイプへアクセスすることによりリアルタイムの線量を得る事ができます。
-  $ cat /tmp/rasdiation_fifo
+  $ cat /var/lib/rasdiation/rasdiation.fifo
   UnixTime,1363680524,CPM,3.550000,uSv/h,0.066941,uSv/h_Tolerance,0.007944
   $
 
@@ -88,6 +84,16 @@
    CPM             ・・・・ 一般的な放射線量測定に使われる単位"CPM"
    uSv/h           ・・・・ 一般的な放射線量測定に使われる単位"uSv/h"
    uSv/h_Error     ・・・・ 上記単位"uSv/h"の誤差範囲
+
+【起動時にバックグラウンドで自動実行する場合】
+  "/etc/inittab"の最後に下記を追記してください。
+  $ sudo vi /etc/inittab
+  alog:2000:respawn:/usr/local/bin/rasdiation -s 30 -n 31 -o /var/lib/rasdiation/rasdiation.fifo
+
+  "/etc/inittab"を再認識させてください。
+  $ sudo kill -HUP 1
+
+  これらの設定を行うだけで再起動後しても自動で実行されます。
 
 【開発者の連絡先】
   何かありましたら上記にある"製作者ホームページ"よりご連絡ください。

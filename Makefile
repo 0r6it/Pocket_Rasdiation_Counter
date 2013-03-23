@@ -1,10 +1,12 @@
 CC            = gcc
 CFLAGS        = -O4 -Wall -I/usr/local/include
-DEST          = /usr/bin
+DEST          = /usr/local/bin
 LDFLAGS       = -L/usr/local/lib
 LIBS          = -pthread -lwiringPi -lm
 OBJS          = rasdiation.c
 PROGRAM       = rasdiation
+PROGRAMDIR    = /var/lib/rasdiation
+FIFO          = /var/lib/rasdiation/rasdiation.fifo
 
 all:            $(PROGRAM)
 
@@ -16,3 +18,5 @@ clean:
 
 install:        $(PROGRAM)
 		install -s $(PROGRAM) $(DEST)
+		mkdir -p $(PROGRAMDIR)
+		mkfifo $(FIFO)
